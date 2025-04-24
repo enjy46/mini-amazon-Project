@@ -3,10 +3,8 @@ import { products, getProduct } from '../../data/products.js';
 import {formatCurrency} from '../utils/money.js';
 import {deliveryOptions, getDeliveryOption} from '../../data/deliveryOptions.js';
 import dayjs from 'https://cdn.skypack.dev/dayjs';
+import { renderPaymentSummary } from './paymentSummary.js';
 
-
-const today= dayjs();
-const deliveryDate= today.add(7,'days');
 
 
 export function renderOrderSummary(){
@@ -130,7 +128,8 @@ export function renderOrderSummary(){
         `.js-cart-item-container-${productId}`
     );
     container.remove();
-    });
+    renderPaymentSummary();    
+});
   });
 
   document.querySelectorAll('.js-delivery-option').forEach((element)=>{
@@ -138,10 +137,8 @@ export function renderOrderSummary(){
     const {productId, deliveryOptionId}= element.dataset;
     updateDeliveryOption(productId, deliveryOptionId);
     renderOrderSummary();
+    renderPaymentSummary();
 
   });
   });
 }
-
-
-renderOrderSummary();
